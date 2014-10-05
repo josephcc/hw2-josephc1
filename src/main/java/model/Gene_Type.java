@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Wed Sep 24 02:38:07 EDT 2014
+ * Updated by JCasGen Sun Oct 05 03:21:35 EDT 2014
  * @generated */
 public class Gene_Type extends Sentence_Type {
   /** @generated 
@@ -69,6 +69,54 @@ public class Gene_Type extends Sentence_Type {
     ll_cas.ll_setStringValue(addr, casFeatCode_gene, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_processor;
+  /** @generated */
+  final int     casFeatCode_processor;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getProcessor(int addr) {
+        if (featOkTst && casFeat_processor == null)
+      jcas.throwFeatMissing("processor", "model.Gene");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_processor);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setProcessor(int addr, String v) {
+        if (featOkTst && casFeat_processor == null)
+      jcas.throwFeatMissing("processor", "model.Gene");
+    ll_cas.ll_setStringValue(addr, casFeatCode_processor, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_score;
+  /** @generated */
+  final int     casFeatCode_score;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public double getScore(int addr) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "model.Gene");
+    return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setScore(int addr, double v) {
+        if (featOkTst && casFeat_score == null)
+      jcas.throwFeatMissing("score", "model.Gene");
+    ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
+    
+  
 
 
 
@@ -84,6 +132,14 @@ public class Gene_Type extends Sentence_Type {
  
     casFeat_gene = jcas.getRequiredFeatureDE(casType, "gene", "uima.cas.String", featOkTst);
     casFeatCode_gene  = (null == casFeat_gene) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_gene).getCode();
+
+ 
+    casFeat_processor = jcas.getRequiredFeatureDE(casType, "processor", "uima.cas.String", featOkTst);
+    casFeatCode_processor  = (null == casFeat_processor) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_processor).getCode();
+
+ 
+    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
+    casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
 
   }
 }

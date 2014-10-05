@@ -19,13 +19,14 @@ import model.Sentence;
  * @author josephcc
  * 
  */
-public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
+
+abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
 
   /**
    * Extractor implements RangeExtractor interface is the algorithm (strategy) used, by default
    * extracts genes
    */
-  public RangeExtractor extractor = GeneRangeExtractor.getSingletonInstance();
+  abstract public RangeExtractor getExtractor();
 
   /**
    * Process Sentence CAS
@@ -42,7 +43,7 @@ public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
 
       // System.out.println(sentence.getId());
       // System.out.println(sentence.getText());
-      Map<Integer, Integer> genes = extractor.getSpans(sentence.getText());
+      Map<Integer, Integer> genes = getExtractor().getSpans(sentence.getText());
       for (Entry<Integer, Integer> range : genes.entrySet()) {
         Integer begin = range.getKey();
         Integer end = range.getValue();

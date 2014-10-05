@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Wed Sep 24 02:38:07 EDT 2014
- * XML source: /Users/josephcc/git/courses/software_engineering/hw1-josephc1/src/main/java/model/typeSystemDescriptor.xml
+ * Updated by JCasGen Sun Oct 05 03:21:35 EDT 2014
+ * XML source: /Users/josephcc/git/courses/software_engineering/hw2-josephc1/src/main/resources/descriptors/typeSystemDescriptor.xml
  * @generated */
 public class Gene extends Sentence {
   /** @generated
@@ -96,6 +96,50 @@ public class Gene extends Sentence {
     if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_gene == null)
       jcasType.jcas.throwFeatMissing("gene", "model.Gene");
     jcasType.ll_cas.ll_setStringValue(addr, ((Gene_Type)jcasType).casFeatCode_gene, v);}    
+   
+    
+  //*--------------*
+  //* Feature: processor
+
+  /** getter for processor - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public String getProcessor() {
+    if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_processor == null)
+      jcasType.jcas.throwFeatMissing("processor", "model.Gene");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Gene_Type)jcasType).casFeatCode_processor);}
+    
+  /** setter for processor - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setProcessor(String v) {
+    if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_processor == null)
+      jcasType.jcas.throwFeatMissing("processor", "model.Gene");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Gene_Type)jcasType).casFeatCode_processor, v);}    
+   
+    
+  //*--------------*
+  //* Feature: score
+
+  /** getter for score - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public double getScore() {
+    if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_score == null)
+      jcasType.jcas.throwFeatMissing("score", "model.Gene");
+    return jcasType.ll_cas.ll_getDoubleValue(addr, ((Gene_Type)jcasType).casFeatCode_score);}
+    
+  /** setter for score - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setScore(double v) {
+    if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_score == null)
+      jcasType.jcas.throwFeatMissing("score", "model.Gene");
+    jcasType.ll_cas.ll_setDoubleValue(addr, ((Gene_Type)jcasType).casFeatCode_score, v);}    
   }
 
     

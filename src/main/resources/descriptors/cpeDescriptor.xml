@@ -8,9 +8,9 @@
         </collectionIterator>
     </collectionReader>
     <casProcessors casPoolSize="3" processingUnitThreadCount="1">
-        <casProcessor deployment="integrated" name="aeDescriptorLingPipe">
+        <casProcessor deployment="integrated" name="hw2-josephc1-aae">
             <descriptor>
-                <import location="aeDescriptorLingPipe.xml"/>
+                <import location="../hw2-josephc1-aae.xml"/>
             </descriptor>
             <deploymentParameters/>
             <errorHandling>

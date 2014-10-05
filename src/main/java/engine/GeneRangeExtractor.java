@@ -27,36 +27,19 @@ public class GeneRangeExtractor implements RangeExtractor {
    * Chunker for GENETAG NER tagger
    */
   private Chunker chunker;
-
-  /**
-   * relative path to the pre-trained model file as resource
-   */
-  private final String resourceName = "/ne-en-bio-genetag.HmmChunker";
+  
 
   // Static member holds only one instance of the
   // SingletonExample class
-  private static GeneRangeExtractor singletonInstance;
+  private static Map<String, GeneRangeExtractor> singletonInstances;
 
   // SingletonExample prevents any other class from instantiating
-  private GeneRangeExtractor() {
-  }
-
-  // Providing Global point of access
-  public static GeneRangeExtractor getSingletonInstance() {
-    if (null == singletonInstance) {
-      singletonInstance = new GeneRangeExtractor();
-      singletonInstance.initialize();
-    }
-    return singletonInstance;
-  }
-
   /**
    * Initializer
    * 
    * Load the pre-trained model once when object is initialized called when the singleton is created
    */
-  private void initialize() {
-
+  private GeneRangeExtractor(String resourceName) {
     try {
       chunker = (Chunker) AbstractExternalizable.readResourceObject(resourceName);
     } catch (IOException e1) {
@@ -66,8 +49,20 @@ public class GeneRangeExtractor implements RangeExtractor {
       e1.printStackTrace();
       return;
     }
-
   }
+
+  // Providing Global point of access
+  public static GeneRangeExtractor getSingletonInstance(String resourceName) {
+    if (null == singletonInstances) {
+      singletonInstances = new HashMap<String, GeneRangeExtractor>();
+    }
+    if (! singletonInstances.containsKey(resourceName)) {
+      singletonInstances.put(resourceName, new GeneRangeExtractor("/" + resourceName));
+    }
+    return singletonInstances.get(resourceName);
+  }
+
+
 
   /**
    * Extract gene sequence from text
@@ -87,6 +82,7 @@ public class GeneRangeExtractor implements RangeExtractor {
     while (it.hasNext()) {
       Chunk chunk = it.next();
       begin2end.put(chunk.start(), chunk.end());
+//      chunk.score();
     }
     return begin2end;
   }
