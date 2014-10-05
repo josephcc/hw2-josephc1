@@ -35,37 +35,19 @@ abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
    */
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
+    Map<Integer, Integer> genes = getExtractor().getSpans(aJCas.getDocumentText());
+    for (Entry<Integer, Integer> range : genes.entrySet()) {
+  	Integer begin = range.getKey();
+  	Integer end = range.getValue();
+  	String name = aJCas.getDocumentText().substring(begin, end);
+  	
+  	Gene gene = new Gene(aJCas);
+  	gene.setBegin(begin);
+  	gene.setEnd(end);
+  	gene.setGene(name);
+  	gene.setProcessor(getName());
+  	gene.addToIndexes();
 
-//    FSIterator<Annotation> iter = aJCas.getAnnotationIndex(Sentence.type).iterator();
-
-//    while (iter.hasNext()) {
-//      Sentence sentence = (Sentence) iter.next();
-
-      // System.out.println(sentence.getId());
-      // System.out.println(sentence.getText());
-      Map<Integer, Integer> genes = getExtractor().getSpans(aJCas.getDocumentText());
-      for (Entry<Integer, Integer> range : genes.entrySet()) {
-        Integer begin = range.getKey();
-        Integer end = range.getValue();
-        String name = aJCas.getDocumentText().substring(begin, end);
-        // System.out.println(begin + "/" + end + " -> " + name);
-
-        String sentId = ((Sentence) aJCas.getJFSIndexRepository().getAllIndexedFS(Sentence.type).next()).getId();
-        if (sentId == null) {
-          System.out.println("noooooo " + getName());
-        }
-        
-        Gene gene = new Gene(aJCas);
-        gene.setBegin(begin);
-        gene.setEnd(end);
-        gene.setGene(name);
-//        gene.setId(sentence.getId());
-//        gene.setText(aJCas.getDocumentText());
-        gene.setProcessor(getName());
-        gene.addToIndexes();
-
-//      }
-      // System.out.println("-----");
     }
 
   }

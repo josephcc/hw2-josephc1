@@ -144,24 +144,10 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
 
     Sentence sentence = new Sentence(jcas);
     sentence.setId(sid);
-    if (sid == null) {
-      System.out.println("nooooo1");
-      System.out.println(line);
-    }
-    if (sentence.getId() == null) {
-      System.out.println("nooooo2");
-      System.out.println(line);
-    }    
     
     jcas.setDocumentText(text);
 
     sentence.addToIndexes(jcas);
-    
-    String sentId = ((Sentence) jcas.getJFSIndexRepository().getAllIndexedFS(Sentence.type).next()).getId();
-    if (sentId == null) {
-      System.out.println("noooooo " + "READER");
-    }
-    System.out.println(sentId);
     
     if ((line = br.readLine()) == null) {
       br.close();

@@ -97,22 +97,6 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     
     String sentId = ((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()).getId();
     
-    if (sentId == null) {
-      System.out.println("noooooo " + "CONSUMER");
-      System.out.println(jcas);
-//      System.out.println(( jcas.getJFSIndexRepository()));
-//      System.out.println(( jcas.getJFSIndexRepository().getAllIndexedFS(Sentence.type)));
-      System.out.println(((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()));
-      System.out.println("-----------");
-    } else {
-      System.out.println("yesssss " + "CONSUMER");
-      System.out.println(jcas);
-//      System.out.println(( jcas.getJFSIndexRepository()));
-//      System.out.println(( jcas.getJFSIndexRepository().getAllIndexedFS(Sentence.type)));
-      System.out.println(((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()));
-      System.out.println("-----------");      
-    }
-    
     it = jcas.getAnnotationIndex(Gene.type).iterator();
     while (it.hasNext()) {
       Gene gene = (Gene) it.next();
@@ -123,7 +107,6 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       String out = sentId + "|" + (gene.getBegin() - preSpace) + " "
               + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getProcessor();
 
-      // System.out.println(out);
       outFile.println(out);
     }
   }
