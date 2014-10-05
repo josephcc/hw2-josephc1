@@ -37,6 +37,8 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
    * Handle for the (only) input file
    */
   private BufferedReader br = null;
+  
+  private String line;
 
   /**
    * Path to the only input file
@@ -97,15 +99,22 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
   @Override
   public void initialize() throws ResourceInitializationException {
     super.initialize();
+    
     try {
       TotalLines = countLines(filename);
     } catch (IOException e1) {
+      // TODO Auto-generated catch block
       e1.printStackTrace();
     }
+    
     File file = new File(filename);
     try {
       br = new BufferedReader(new FileReader(file));
+      line = br.readLine();
     } catch (FileNotFoundException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
@@ -126,20 +135,35 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
     } catch (CASException e) {
       throw new CollectionException(e);
     }
-    String line;
-    if ((line = br.readLine()) != null) {
-      CurrentLines += 1;
-      int sep = line.indexOf(' ');
-      String id = line.substring(0, sep);
-      String text = line.substring(sep + 1);
+    CurrentLines += 1;
+      
+    String[] sep = line.split("\\s", 2);
+    String sid = sep[0];
+    String text = sep[1];
+      
 
-      Sentence sentence = new Sentence(jcas);
-      sentence.setId(id);
-      sentence.setText(text);
-      sentence.setBegin(0);
-      sentence.setEnd(text.length() - 1);
-      sentence.addToIndexes(jcas);
-    } else {
+    Sentence sentence = new Sentence(jcas);
+    sentence.setId(sid);
+    if (sid == null) {
+      System.out.println("nooooo1");
+      System.out.println(line);
+    }
+    if (sentence.getId() == null) {
+      System.out.println("nooooo2");
+      System.out.println(line);
+    }    
+    
+    jcas.setDocumentText(text);
+
+    sentence.addToIndexes(jcas);
+    
+    String sentId = ((Sentence) jcas.getJFSIndexRepository().getAllIndexedFS(Sentence.type).next()).getId();
+    if (sentId == null) {
+      System.out.println("noooooo " + "READER");
+    }
+    System.out.println(sentId);
+    
+    if ((line = br.readLine()) == null) {
       br.close();
       empty = true;
     }

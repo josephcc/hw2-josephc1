@@ -76,6 +76,7 @@ public class GeneRangeExtractor implements RangeExtractor {
    */
   public Map<Integer, Integer> getSpans(String text) {
     Map<Integer, Integer> begin2end = new HashMap<Integer, Integer>();
+
     Chunking chunking = chunker.chunk(text);
     Set<Chunk> chunkSet = chunking.chunkSet();
     Iterator<Chunk> it = chunkSet.iterator();

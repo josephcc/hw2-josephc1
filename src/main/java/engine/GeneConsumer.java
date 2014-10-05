@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import model.Gene;
+import model.Sentence;
 
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASException;
@@ -91,16 +92,36 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     } catch (CASException e) {
       throw new ResourceProcessException(e);
     }
-
-    FSIterator<Annotation> it = jcas.getAnnotationIndex(Gene.type).iterator();
+    
+    FSIterator<Annotation> it;
+    
+    String sentId = ((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()).getId();
+    
+    if (sentId == null) {
+      System.out.println("noooooo " + "CONSUMER");
+      System.out.println(jcas);
+//      System.out.println(( jcas.getJFSIndexRepository()));
+//      System.out.println(( jcas.getJFSIndexRepository().getAllIndexedFS(Sentence.type)));
+      System.out.println(((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()));
+      System.out.println("-----------");
+    } else {
+      System.out.println("yesssss " + "CONSUMER");
+      System.out.println(jcas);
+//      System.out.println(( jcas.getJFSIndexRepository()));
+//      System.out.println(( jcas.getJFSIndexRepository().getAllIndexedFS(Sentence.type)));
+      System.out.println(((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()));
+      System.out.println("-----------");      
+    }
+    
+    it = jcas.getAnnotationIndex(Gene.type).iterator();
     while (it.hasNext()) {
       Gene gene = (Gene) it.next();
-      String preText = gene.getText().substring(0, gene.getBegin());
+      String preText = jcas.getDocumentText().substring(0, gene.getBegin());
       String name = gene.getGene();
       int preSpace = preText.length() - preText.replaceAll(" ", "").length();
       int inSpace = name.length() - name.replaceAll(" ", "").length();
-      String out = gene.getId() + "|" + (gene.getBegin() - preSpace) + " "
-              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene();
+      String out = sentId + "|" + (gene.getBegin() - preSpace) + " "
+              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getProcessor();
 
       // System.out.println(out);
       outFile.println(out);

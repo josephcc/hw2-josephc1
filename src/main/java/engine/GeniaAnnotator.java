@@ -7,4 +7,9 @@ public class GeniaAnnotator extends RangeExtractionAnnotator {
     return GeneRangeExtractor.getSingletonInstance("ne-en-bio-genia-2.TokenShapeChunker");
   }
 
+  @Override
+  public String getName() {
+    return "Genia";
+  }
+
 }

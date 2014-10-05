@@ -8,7 +8,7 @@
     <typeDescription>
       <name>model.Gene</name>
       <description/>
-      <supertypeName>model.Sentence</supertypeName>
+      <supertypeName>uima.tcas.Annotation</supertypeName>
       <features>
         <featureDescription>
           <name>gene</name>

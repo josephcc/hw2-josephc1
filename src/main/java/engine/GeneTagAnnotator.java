@@ -6,4 +6,9 @@ public class GeneTagAnnotator extends RangeExtractionAnnotator {
   public RangeExtractor getExtractor() {
     return GeneRangeExtractor.getSingletonInstance("ne-en-bio-genetag.HmmChunker");
   }
+
+  @Override
+  public String getName() {
+    return "GeneTag";
+  }
 }
