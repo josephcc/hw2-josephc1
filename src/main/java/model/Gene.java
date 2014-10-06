@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Sun Oct 05 05:53:58 EDT 2014
+ * Updated by JCasGen Mon Oct 06 10:40:56 EDT 2014
  * XML source: /Users/josephcc/git/courses/software_engineering/hw2-josephc1/src/main/resources/descriptors/typeSystemDescriptor.xml
  * @generated */
 public class Gene extends Annotation {
@@ -140,6 +140,28 @@ public class Gene extends Annotation {
     if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_score == null)
       jcasType.jcas.throwFeatMissing("score", "model.Gene");
     jcasType.ll_cas.ll_setDoubleValue(addr, ((Gene_Type)jcasType).casFeatCode_score, v);}    
+   
+    
+  //*--------------*
+  //* Feature: category
+
+  /** getter for category - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public String getCategory() {
+    if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_category == null)
+      jcasType.jcas.throwFeatMissing("category", "model.Gene");
+    return jcasType.ll_cas.ll_getStringValue(addr, ((Gene_Type)jcasType).casFeatCode_category);}
+    
+  /** setter for category - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setCategory(String v) {
+    if (Gene_Type.featOkTst && ((Gene_Type)jcasType).casFeat_category == null)
+      jcasType.jcas.throwFeatMissing("category", "model.Gene");
+    jcasType.ll_cas.ll_setStringValue(addr, ((Gene_Type)jcasType).casFeatCode_category, v);}    
   }
 
     

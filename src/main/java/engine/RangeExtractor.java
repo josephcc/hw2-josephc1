@@ -1,5 +1,6 @@
 package engine;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,5 +10,5 @@ import java.util.Map;
  * 
  */
 public interface RangeExtractor {
-  public Map<Integer, Integer> getSpans(String text);
+  public List<Map<String, Object>> getSpans(String text);
 }

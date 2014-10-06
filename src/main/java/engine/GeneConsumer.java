@@ -104,10 +104,14 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       String name = gene.getGene();
       int preSpace = preText.length() - preText.replaceAll(" ", "").length();
       int inSpace = name.length() - name.replaceAll(" ", "").length();
+      preSpace = 0;
+      inSpace = 0;
+
       String out = sentId + "|" + (gene.getBegin() - preSpace) + " "
-              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getProcessor();
+              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getCategory() + "|" + gene.getScore() + "|" + gene.getProcessor();
 
       outFile.println(out);
+      System.out.println(out);
     }
   }
 }

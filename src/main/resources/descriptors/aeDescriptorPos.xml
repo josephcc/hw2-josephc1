@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <analysisEngineDescription xmlns="http://uima.apache.org/resourceSpecifier">
   <frameworkImplementation>org.apache.uima.java</frameworkImplementation>
-  <primitive>false</primitive>  
-  <delegateAnalysisEngineSpecifiers>
-    <delegateAnalysisEngine key="aeDescriptorGenia">
-      <import name="descriptors.aeDescriptorGenia"/>
-    </delegateAnalysisEngine>
-    <delegateAnalysisEngine key="aeDescriptorGeneTag">
-      <import name="descriptors.aeDescriptorGeneTag"/>
-    </delegateAnalysisEngine>
-  <delegateAnalysisEngine key="aeDescriptorPos">
-      <import name="descriptors.aeDescriptorPos"/>
-    </delegateAnalysisEngine>
-  </delegateAnalysisEngineSpecifiers>
+  <primitive>true</primitive>  <annotatorImplementationName>engine.PosAnnotator</annotatorImplementationName>
   <analysisEngineMetaData>
-    <name>hw2-josephc1-aae</name>
+    <name>aeDescriptorPos</name>
     <description/>
     <version>1.0</version>
     <vendor/>
     <configurationParameters/>
     <configurationParameterSettings/>
-    <flowConstraints>
-      <fixedFlow>
-        <node>aeDescriptorPos</node>
-        <node>aeDescriptorGeneTag</node>
-      <node>aeDescriptorGenia</node>
-      </fixedFlow>
-    </flowConstraints>
+    <typeSystemDescription>
+      <imports>
+        <import name="descriptors.typeSystemDescriptor"/>
+      </imports>
+    </typeSystemDescription>
+    <typePriorities/>
     <fsIndexCollection/>
     <capabilities>
       <capability>

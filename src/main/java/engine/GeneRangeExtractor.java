@@ -1,8 +1,10 @@
 package engine;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -71,20 +73,26 @@ public class GeneRangeExtractor implements RangeExtractor {
    * 
    * @param text
    *          A English sentence that may or may not contains some gene sequence
-   * @return A Map that map begin indexes to end indexes of where gene sequence appear in the input
-   *         text
+   * @return A Map that map begin indexes to end indexes of where gene sequence appear in the input text
    */
-  public Map<Integer, Integer> getSpans(String text) {
-    Map<Integer, Integer> begin2end = new HashMap<Integer, Integer>();
+  public List<Map<String, Object>> getSpans(String text) {
+	  ArrayList<Map<String, Object>> out = new ArrayList<Map<String, Object>>();
 
     Chunking chunking = chunker.chunk(text);
     Set<Chunk> chunkSet = chunking.chunkSet();
     Iterator<Chunk> it = chunkSet.iterator();
     while (it.hasNext()) {
+      System.out.println("LOOP");
+      Map<String,Object> gene = new HashMap<String, Object>();
       Chunk chunk = it.next();
-      begin2end.put(chunk.start(), chunk.end());
-//      chunk.score();
+	    gene.put("begin", chunk.start());
+	    gene.put("end", chunk.end());
+	    gene.put("score", chunk.score());
+	    gene.put("type", chunk.type());
+      System.out.println(chunk.start() + ":" + chunk.end() + ":" + chunk.score()+ ":" + chunk.type());
+
+	    out.add(gene);
     }
-    return begin2end;
+    return out;
   }
 }

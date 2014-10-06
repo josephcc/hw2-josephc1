@@ -1,14 +1,13 @@
 package engine;
 
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.uima.analysis_component.JCasAnnotator_ImplBase;
 import org.apache.uima.analysis_engine.AnalysisEngineProcessException;
 import org.apache.uima.jcas.JCas;
 
 import model.Gene;
-import model.Sentence;
 
 /**
  * 
@@ -35,18 +34,23 @@ abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
    */
   @Override
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
-    Map<Integer, Integer> genes = getExtractor().getSpans(aJCas.getDocumentText());
-    for (Entry<Integer, Integer> range : genes.entrySet()) {
-  	Integer begin = range.getKey();
-  	Integer end = range.getValue();
-  	String name = aJCas.getDocumentText().substring(begin, end);
-  	
-  	Gene gene = new Gene(aJCas);
-  	gene.setBegin(begin);
-  	gene.setEnd(end);
-  	gene.setGene(name);
-  	gene.setProcessor(getName());
-  	gene.addToIndexes();
+    List<Map<String, Object>> ranges = getExtractor().getSpans(aJCas.getDocumentText());
+    for (Map<String, Object> range : ranges) {
+    	Integer begin = (Integer) range.get("begin");
+    	Integer end = (Integer) range.get("end");
+		  Double score = (Double) range.get("score");
+		  String category = (String) range.get("type");
+    	String name = aJCas.getDocumentText().substring(begin, end);
+    	
+    	Gene gene = new Gene(aJCas);
+    	gene.setBegin(begin);
+    	gene.setEnd(end);
+    	gene.setGene(name);
+		  gene.setScore(score);
+    	gene.setProcessor(getName());
+    	gene.setCategory(category);
+    	gene.addToIndexes();
+    	
 
     }
 

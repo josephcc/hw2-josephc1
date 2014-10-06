@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Sun Oct 05 05:53:58 EDT 2014
+ * Updated by JCasGen Mon Oct 06 10:40:56 EDT 2014
  * @generated */
 public class Gene_Type extends Annotation_Type {
   /** @generated 
@@ -117,6 +117,30 @@ public class Gene_Type extends Annotation_Type {
     ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_category;
+  /** @generated */
+  final int     casFeatCode_category;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public String getCategory(int addr) {
+        if (featOkTst && casFeat_category == null)
+      jcas.throwFeatMissing("category", "model.Gene");
+    return ll_cas.ll_getStringValue(addr, casFeatCode_category);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setCategory(int addr, String v) {
+        if (featOkTst && casFeat_category == null)
+      jcas.throwFeatMissing("category", "model.Gene");
+    ll_cas.ll_setStringValue(addr, casFeatCode_category, v);}
+    
+  
 
 
 
@@ -140,6 +164,10 @@ public class Gene_Type extends Annotation_Type {
  
     casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
     casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
+
+ 
+    casFeat_category = jcas.getRequiredFeatureDE(casType, "category", "uima.cas.String", featOkTst);
+    casFeatCode_category  = (null == casFeat_category) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_category).getCode();
 
   }
 }
