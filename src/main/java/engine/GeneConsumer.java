@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import model.Gene;
@@ -23,6 +21,10 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.apache.uima.resource.ResourceInitializationException;
 import org.apache.uima.resource.ResourceProcessException;
 import org.apache.uima.resource.ResourceSpecifier;
+
+import com.aliasi.crf.ChainCrf;
+import com.aliasi.tag.Tagging;
+import com.aliasi.util.AbstractExternalizable;
 
 /**
  * Output to file
@@ -138,31 +140,47 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       throw new ResourceProcessException(e);
     }
     
-    FSIterator<Annotation> it;
-    
     String sentId = ((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()).getId();
-    try{
+    
+    try {
+      @SuppressWarnings("unchecked")
+      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/simplePos.ChainCrf");
+      
       PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
-      out.println(sentId + ":::" + extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText()));
+      ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText());
+      out.println(sentId + ":::" + words);
       out.close();
-    }catch (IOException e) {
-      //exception handling left as an exercise for the reader
+      
+      Tagging<String> tagging = crf.tag(words);
+      System.out.println(tagging);
+      
+    } catch (IOException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
+    } catch (ClassNotFoundException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
     }
-    it = jcas.getAnnotationIndex(Gene.type).iterator();
-    while (it.hasNext()) {
-      Gene gene = (Gene) it.next();
-      String preText = jcas.getDocumentText().substring(0, gene.getBegin());
-      String name = gene.getGene();
-      int preSpace = preText.length() - preText.replaceAll(" ", "").length();
-      int inSpace = name.length() - name.replaceAll(" ", "").length();
-      preSpace = 0;
-      inSpace = 0;
+    
+    
 
-      String out = sentId + "|" + (gene.getBegin() - preSpace) + " "
-              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getCategory() + "|" + gene.getScore() + "|" + gene.getProcessor();
 
-      outFile.println(out);
-//      System.out.println(out);
-    }
+//  FSIterator<Annotation> it;
+//    it = jcas.getAnnotationIndex(Gene.type).iterator();
+//    while (it.hasNext()) {
+//      Gene gene = (Gene) it.next();
+//      String preText = jcas.getDocumentText().substring(0, gene.getBegin());
+//      String name = gene.getGene();
+//      int preSpace = preText.length() - preText.replaceAll(" ", "").length();
+//      int inSpace = name.length() - name.replaceAll(" ", "").length();
+//      preSpace = 0;
+//      inSpace = 0;
+//
+//      String out = sentId + "|" + (gene.getBegin() - preSpace) + " "
+//              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getCategory() + "|" + gene.getScore() + "|" + gene.getProcessor();
+//
+//      outFile.println(out);
+////      System.out.println(out);
+//    }
   }
 }
