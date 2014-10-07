@@ -38,7 +38,6 @@ public class PosRangeExrtactor  implements RangeExtractor  {
       int begin = token.beginPosition();
       int end = token.endPosition();
 
-      System.out.println("LOOP");
       Map<String,Object> gene = new HashMap<String, Object>();
 
       gene.put("begin", begin);

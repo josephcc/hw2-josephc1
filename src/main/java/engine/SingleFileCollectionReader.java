@@ -141,8 +141,6 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
     String sid = sep[0];
     String text = sep[1];
       
-    System.out.println(line);
-
     Sentence sentence = new Sentence(jcas);
     sentence.setId(sid);
     

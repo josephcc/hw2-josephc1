@@ -1,8 +1,14 @@
 package engine;
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import model.Gene;
@@ -76,6 +82,45 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     super.destroy();
   }
 
+  private ArrayList<String> extractFeatureMap(FSIterator<Annotation> it, String text) {
+    ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>(text.length());
+    for (int i=0; i<text.length(); i++) {
+      ArrayList<String> features = new ArrayList<String>();
+      char c = text.charAt(i);
+      String type = "others";
+      if (c >= 'A' && c <= 'Z') {
+        type = "upper";
+      } else if (c >= 'a' && c <= 'z') {
+        type = "lower";
+      } else if (c >= '0' && c <= '9') {
+        type = "number";
+      } else if (c == ' ') {
+        type = "space";
+      }
+      features.add("CHAR_" + type);
+      map.add(features);
+    }
+    while (it.hasNext()) {
+      Gene gene = (Gene) it.next();
+      String type = gene.getCategory();
+      String processor = gene.getProcessor();
+      int begin = gene.getBegin();
+      int end = gene.getEnd();
+      for(int i=begin; i<end; i++) {
+        map.get(i).add(processor + "_" + type);
+      }
+    }
+    ArrayList<String> words = new ArrayList<String>(text.length());
+    for(ArrayList<String> fs : map) {
+      String word = fs.get(0);
+      for(int i=1; i<fs.size(); ++i) {
+        word = word + ":::" + fs.get(i);
+      }
+      words.add(word);
+    }
+    return words;
+  }
+  
   /**
    * Gather data for output
    * 
@@ -96,7 +141,13 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     FSIterator<Annotation> it;
     
     String sentId = ((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()).getId();
-    
+    try{
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
+      out.println(sentId + ":::" + extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText()));
+      out.close();
+    }catch (IOException e) {
+      //exception handling left as an exercise for the reader
+    }
     it = jcas.getAnnotationIndex(Gene.type).iterator();
     while (it.hasNext()) {
       Gene gene = (Gene) it.next();
@@ -111,7 +162,7 @@ public class GeneConsumer extends CasConsumer_ImplBase {
               + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getCategory() + "|" + gene.getScore() + "|" + gene.getProcessor();
 
       outFile.println(out);
-      System.out.println(out);
+//      System.out.println(out);
     }
   }
 }

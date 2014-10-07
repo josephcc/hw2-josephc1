@@ -82,14 +82,12 @@ public class GeneRangeExtractor implements RangeExtractor {
     Set<Chunk> chunkSet = chunking.chunkSet();
     Iterator<Chunk> it = chunkSet.iterator();
     while (it.hasNext()) {
-      System.out.println("LOOP");
       Map<String,Object> gene = new HashMap<String, Object>();
       Chunk chunk = it.next();
 	    gene.put("begin", chunk.start());
 	    gene.put("end", chunk.end());
 	    gene.put("score", chunk.score());
 	    gene.put("type", chunk.type());
-      System.out.println(chunk.start() + ":" + chunk.end() + ":" + chunk.score()+ ":" + chunk.type());
 
 	    out.add(gene);
     }
