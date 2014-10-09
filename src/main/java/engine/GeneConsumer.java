@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import model.Gene;
 import model.Sentence;
@@ -89,17 +91,18 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     for (int i=0; i<text.length(); i++) {
       ArrayList<String> features = new ArrayList<String>();
       char c = text.charAt(i);
-      String type = "others";
-      if (c >= 'A' && c <= 'Z') {
-        type = "upper";
-      } else if (c >= 'a' && c <= 'z') {
-        type = "lower";
-      } else if (c >= '0' && c <= '9') {
-        type = "number";
-      } else if (c == ' ') {
-        type = "space";
-      }
-      features.add("CHAR_" + type);
+//      String type = "others";
+//      if (c >= 'A' && c <= 'Z') {
+//        type = "upper";
+//      } else if (c >= 'a' && c <= 'z') {
+//        type = "lower";
+//      } else if (c >= '0' && c <= '9') {
+//        type = "number";
+//      } else if (c == ' ') {
+//        type = "space";
+//      }
+//      features.add("CHAR_" + type);
+      features.add("CHAR_IS_" + c);
       map.add(features);
     }
     while (it.hasNext()) {
@@ -114,6 +117,8 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     }
     ArrayList<String> words = new ArrayList<String>(text.length());
     for(ArrayList<String> fs : map) {
+      if (fs.size() < 1)
+        continue;
       String word = fs.get(0);
       for(int i=1; i<fs.size(); ++i) {
         word = word + ":::" + fs.get(i);
@@ -144,15 +149,45 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     
     try {
       @SuppressWarnings("unchecked")
-      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/simplePos.ChainCrf");
+      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/version3.1000.ChainCrf");
       
       PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
       ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText());
-      out.println(sentId + ":::" + words);
+      String _words = words.get(0);
+      if (words.size() > 1) {
+        for(int i=1; i<words.size(); ++i) {
+          _words = _words + "\t" + words.get(i); 
+        }
+      }
+      out.println(sentId + ":::" + _words);
       out.close();
       
       Tagging<String> tagging = crf.tag(words);
-      System.out.println(tagging);
+      String pattern = "";
+      for(String tag : tagging.tags()) {
+        pattern = pattern + tag;
+      }
+
+//      System.out.println(pattern);
+      
+      Pattern bi = Pattern.compile("BI*");
+      Matcher matcher = bi.matcher(pattern);
+      
+      while(matcher.find()) {
+        int begin = matcher.start();
+        int end = matcher.end();
+        String name = jcas.getDocumentText().substring(begin, end);
+        String preText = jcas.getDocumentText().substring(0, begin);
+        int preSpace = preText.length() - preText.replaceAll(" ", "").length();
+        int inSpace = name.length() - name.replaceAll(" ", "").length();
+        String format = sentId + "|" + (begin - preSpace) + " "
+                + (end - preSpace - inSpace - 1) + "|" + name;
+
+        outFile.println(format);
+//        System.out.println(format);
+      }
+      
+//      System.out.println("\n");
       
     } catch (IOException e1) {
       // TODO Auto-generated catch block
@@ -162,25 +197,6 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       e1.printStackTrace();
     }
     
-    
-
-
-//  FSIterator<Annotation> it;
-//    it = jcas.getAnnotationIndex(Gene.type).iterator();
-//    while (it.hasNext()) {
-//      Gene gene = (Gene) it.next();
-//      String preText = jcas.getDocumentText().substring(0, gene.getBegin());
-//      String name = gene.getGene();
-//      int preSpace = preText.length() - preText.replaceAll(" ", "").length();
-//      int inSpace = name.length() - name.replaceAll(" ", "").length();
-//      preSpace = 0;
-//      inSpace = 0;
-//
-//      String out = sentId + "|" + (gene.getBegin() - preSpace) + " "
-//              + (gene.getEnd() - preSpace - inSpace - 1) + "|" + gene.getGene() + "|" + gene.getCategory() + "|" + gene.getScore() + "|" + gene.getProcessor();
-//
-//      outFile.println(out);
-////      System.out.println(out);
-//    }
+   
   }
 }
