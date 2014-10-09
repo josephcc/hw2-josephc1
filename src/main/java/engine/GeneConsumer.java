@@ -147,50 +147,55 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     
     String sentId = ((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()).getId();
     
-//    try {
-//      @SuppressWarnings("unchecked")
-//      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/version3.1000.ChainCrf");
-//      
-//      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
-//      ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText());
-//      String _words = words.get(0);
-//      if (words.size() > 1) {
-//        for(int i=1; i<words.size(); ++i) {
-//          _words = _words + "\t" + words.get(i); 
-//        }
-//      }
-//      out.println(sentId + ":::" + _words);
-//      out.close();
-//      
-//      Tagging<String> tagging = crf.tag(words);
-//      String pattern = "";
-//      for(String tag : tagging.tags()) {
-//        pattern = pattern + tag;
-//      }
-//      
-//      Pattern bi = Pattern.compile("BI*");
-//      Matcher matcher = bi.matcher(pattern);
-//      
-//      while(matcher.find()) {
-//        int begin = matcher.start();
-//        int end = matcher.end();
-//        String name = jcas.getDocumentText().substring(begin, end);
-//        String preText = jcas.getDocumentText().substring(0, begin);
-//        int preSpace = preText.length() - preText.replaceAll(" ", "").length();
-//        int inSpace = name.length() - name.replaceAll(" ", "").length();
-//        String format = sentId + "|" + (begin - preSpace) + " "
-//                + (end - preSpace - inSpace - 1) + "|" + name;
-//
-//        outFile.println(format);
-//      }
-//
-//    } catch (IOException e1) {
-//      // TODO Auto-generated catch block
-//      e1.printStackTrace();
-//    } catch (ClassNotFoundException e1) {
-//      // TODO Auto-generated catch block
-//      e1.printStackTrace();
-//    }
+    try {
+      @SuppressWarnings("unchecked")
+      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/version3.1000.ChainCrf");
+      
+      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
+      ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText());
+      String _words = words.get(0);
+      if (words.size() > 1) {
+        for(int i=1; i<words.size(); ++i) {
+          _words = _words + "\t" + words.get(i); 
+        }
+      }
+      out.println(sentId + ":::" + _words);
+      out.close();
+      
+      Tagging<String> tagging = crf.tag(words);
+      String pattern = "";
+      for(String tag : tagging.tags()) {
+        pattern = pattern + tag;
+      }
+
+//      System.out.println(pattern);
+      
+      Pattern bi = Pattern.compile("BI*");
+      Matcher matcher = bi.matcher(pattern);
+      
+      while(matcher.find()) {
+        int begin = matcher.start();
+        int end = matcher.end();
+        String name = jcas.getDocumentText().substring(begin, end);
+        String preText = jcas.getDocumentText().substring(0, begin);
+        int preSpace = preText.length() - preText.replaceAll(" ", "").length();
+        int inSpace = name.length() - name.replaceAll(" ", "").length();
+        String format = sentId + "|" + (begin - preSpace) + " "
+                + (end - preSpace - inSpace - 1) + "|" + name;
+
+        outFile.println(format);
+//        System.out.println(format);
+      }
+      
+//      System.out.println("\n");
+      
+    } catch (IOException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
+    } catch (ClassNotFoundException e1) {
+      // TODO Auto-generated catch block
+      e1.printStackTrace();
+    }
     
    
   }

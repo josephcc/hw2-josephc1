@@ -9,7 +9,7 @@ import java.util.Properties;
 import org.apache.uima.resource.ResourceInitializationException;
 
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
-//import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
+import edu.stanford.nlp.ling.CoreAnnotations.TextAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -35,7 +35,7 @@ public class PosRangeExrtactor  implements RangeExtractor  {
 
     for (CoreLabel token : document.get(TokensAnnotation.class)) {
       String pos = token.get(PartOfSpeechAnnotation.class);
-//      String word = token.get(TextAnnotation.class);
+      String word = token.get(TextAnnotation.class);
       int begin = token.beginPosition();
       int end = token.endPosition();
 
@@ -48,6 +48,14 @@ public class PosRangeExrtactor  implements RangeExtractor  {
 
       out.add(gene);
       
+      Map<String,Object> gene2 = new HashMap<String, Object>();
+
+      gene2.put("begin", begin);
+      gene2.put("end", end);
+      gene2.put("score", -1.0);
+      gene2.put("type", "tok_" + word);
+
+      out.add(gene2);
     }
     return out;
   }
