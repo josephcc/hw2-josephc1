@@ -15,8 +15,17 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
+/**
+ * The RangeExtractor for POS-tags using Stanford NLP
+ * 
+ * @author josephcc
+ * 
+ */
 public class PosRangeExrtactor implements RangeExtractor {
 
+  /**
+   * handle to the stanford core nlp pipeline
+   */
   private StanfordCoreNLP pipeline;
 
   public PosRangeExrtactor() throws ResourceInitializationException {
@@ -25,6 +34,10 @@ public class PosRangeExrtactor implements RangeExtractor {
     pipeline = new StanfordCoreNLP(props);
   }
 
+  /**
+   * For a given input text, return a list of maps that contains the: the start, end index of the
+   * span, and the pos tag predicted for that token.
+   */
   public List<Map<String, Object>> getSpans(String text) {
 
     ArrayList<Map<String, Object>> out = new ArrayList<Map<String, Object>>();

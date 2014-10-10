@@ -17,7 +17,11 @@ import com.aliasi.util.AbstractExternalizable;
  * Extract Gene mentions in a given text
  * 
  * Implements the RangeExtractor interface and extract gene sequence in a input text using HMM
- * GENETAG from LingPipe
+ * GENETAG and Genia TokenShapeChunker from LingPipe
+ * 
+ * This use a slightly extended singleton design pattern that stores a set of "singletons" in a Map
+ * that can be used to retrieve a "singletons" of different models, to make sure each unique model
+ * is only loaded once
  * 
  * @author josephcc
  * 
@@ -30,8 +34,9 @@ public class GeneRangeExtractor implements RangeExtractor {
    */
   private Chunker chunker;
 
-  // Static member holds only one instance of the
-  // SingletonExample class
+  /**
+   * A map that hold all the singletons, each with one preload model from LingPipe
+   */
   private static Map<String, GeneRangeExtractor> singletonInstances;
 
   // SingletonExample prevents any other class from instantiating
@@ -52,7 +57,13 @@ public class GeneRangeExtractor implements RangeExtractor {
     }
   }
 
-  // Providing Global point of access
+  /**
+   * Global point of entry to the singleton classes with unique models
+   * 
+   * @param resourceName
+   *          the model for the intended singleton object
+   * @return
+   */
   public static GeneRangeExtractor getSingletonInstance(String resourceName) {
     if (null == singletonInstances) {
       singletonInstances = new HashMap<String, GeneRangeExtractor>();

@@ -25,6 +25,11 @@ abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
    */
   abstract public RangeExtractor getExtractor();
 
+  /**
+   * Provide the name of the extractor to be used as the CasProcessorId
+   * 
+   * @return name of the extractor
+   */
   abstract public String getName();
 
   /**

@@ -39,6 +39,9 @@ import com.aliasi.util.AbstractExternalizable;
  */
 public class GeneConsumer extends CasConsumer_ImplBase {
 
+  /**
+   * Whether to write features to a file for external CRF training
+   */
   private boolean writeFeaturesToFileForTraining = false;
 
   /**
@@ -88,6 +91,15 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     super.destroy();
   }
 
+  /**
+   * Extract features and format it for feeding into the pre-trained CRF model
+   * 
+   * @param it
+   *          iteration to model.Gene to be used as features
+   * @param text
+   *          the actual text of the sequence, i.e., the observables
+   * @return a list of features corresponding to the input text
+   */
   private ArrayList<String> extractFeatureMap(FSIterator<Annotation> it, String text) {
     ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>(text.length());
     for (int i = 0; i < text.length(); i++) {
