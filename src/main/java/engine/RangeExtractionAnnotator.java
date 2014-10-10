@@ -24,7 +24,7 @@ abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
    * extracts genes
    */
   abstract public RangeExtractor getExtractor();
-  
+
   abstract public String getName();
 
   /**
@@ -36,20 +36,20 @@ abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
   public void process(JCas aJCas) throws AnalysisEngineProcessException {
     List<Map<String, Object>> ranges = getExtractor().getSpans(aJCas.getDocumentText());
     for (Map<String, Object> range : ranges) {
-    	Integer begin = (Integer) range.get("begin");
-    	Integer end = (Integer) range.get("end");
-		  Double score = (Double) range.get("score");
-		  String category = (String) range.get("type");
-    	String name = aJCas.getDocumentText().substring(begin, end);
-    	
-    	Gene gene = new Gene(aJCas);
-    	gene.setBegin(begin);
-    	gene.setEnd(end);
-    	gene.setGene(name);
-		  gene.setConfidence(score);
-    	gene.setCasProcessorId(getName());
-    	gene.setCategory(category);
-    	gene.addToIndexes();
+      Integer begin = (Integer) range.get("begin");
+      Integer end = (Integer) range.get("end");
+      Double score = (Double) range.get("score");
+      String category = (String) range.get("type");
+      String name = aJCas.getDocumentText().substring(begin, end);
+
+      Gene gene = new Gene(aJCas);
+      gene.setBegin(begin);
+      gene.setEnd(end);
+      gene.setGene(name);
+      gene.setConfidence(score);
+      gene.setCasProcessorId(getName());
+      gene.setCategory(category);
+      gene.addToIndexes();
     }
 
   }

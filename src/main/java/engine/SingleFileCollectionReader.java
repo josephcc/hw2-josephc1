@@ -37,14 +37,15 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
    * Handle for the (only) input file
    */
   private BufferedReader br = null;
-  
+
   private String line;
 
   /**
    * Path to the only input file
    */
-   private final String filename = "hw2.in";
-//  private final String filename = "src/main/resources/data/sample.in";
+  private final String filename = "hw2.in";
+
+  // private final String filename = "src/main/resources/data/sample.in";
 
   /**
    * Total number of lines in the input file, to provide progress.
@@ -99,14 +100,14 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
   @Override
   public void initialize() throws ResourceInitializationException {
     super.initialize();
-    
+
     try {
       TotalLines = countLines(filename);
     } catch (IOException e1) {
       // TODO Auto-generated catch block
       e1.printStackTrace();
     }
-    
+
     File file = new File(filename);
     try {
       br = new BufferedReader(new FileReader(file));
@@ -136,18 +137,18 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
       throw new CollectionException(e);
     }
     CurrentLines += 1;
-      
+
     String[] sep = line.split("\\s", 2);
     String sid = sep[0];
     String text = sep[1];
-      
+
     Sentence sentence = new Sentence(jcas);
     sentence.setId(sid);
-    
+
     jcas.setDocumentText(text);
 
     sentence.addToIndexes(jcas);
-    
+
     if ((line = br.readLine()) == null) {
       br.close();
       empty = true;

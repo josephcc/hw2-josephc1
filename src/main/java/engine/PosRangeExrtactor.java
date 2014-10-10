@@ -15,7 +15,7 @@ import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
-public class PosRangeExrtactor  implements RangeExtractor  {
+public class PosRangeExrtactor implements RangeExtractor {
 
   private StanfordCoreNLP pipeline;
 
@@ -25,9 +25,8 @@ public class PosRangeExrtactor  implements RangeExtractor  {
     pipeline = new StanfordCoreNLP(props);
   }
 
-
   public List<Map<String, Object>> getSpans(String text) {
-    
+
     ArrayList<Map<String, Object>> out = new ArrayList<Map<String, Object>>();
 
     Annotation document = new Annotation(text);
@@ -35,11 +34,11 @@ public class PosRangeExrtactor  implements RangeExtractor  {
 
     for (CoreLabel token : document.get(TokensAnnotation.class)) {
       String pos = token.get(PartOfSpeechAnnotation.class);
-//      String word = token.get(TextAnnotation.class);
+      // String word = token.get(TextAnnotation.class);
       int begin = token.beginPosition();
       int end = token.endPosition();
 
-      Map<String,Object> gene = new HashMap<String, Object>();
+      Map<String, Object> gene = new HashMap<String, Object>();
 
       gene.put("begin", begin);
       gene.put("end", end);

@@ -3,7 +3,7 @@ package engine;
 import org.apache.uima.resource.ResourceInitializationException;
 
 public class PosAnnotator extends RangeExtractionAnnotator {
-  
+
   private RangeExtractor extractor = null;
 
   @Override

@@ -38,7 +38,7 @@ import com.aliasi.util.AbstractExternalizable;
  * 
  */
 public class GeneConsumer extends CasConsumer_ImplBase {
-  
+
   private boolean writeFeaturesToFileForTraining = false;
 
   /**
@@ -90,7 +90,7 @@ public class GeneConsumer extends CasConsumer_ImplBase {
 
   private ArrayList<String> extractFeatureMap(FSIterator<Annotation> it, String text) {
     ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>(text.length());
-    for (int i=0; i<text.length(); i++) {
+    for (int i = 0; i < text.length(); i++) {
       ArrayList<String> features = new ArrayList<String>();
       char c = text.charAt(i);
 
@@ -103,23 +103,23 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       String processor = gene.getCasProcessorId();
       int begin = gene.getBegin();
       int end = gene.getEnd();
-      for(int i=begin; i<end; i++) {
+      for (int i = begin; i < end; i++) {
         map.get(i).add(processor + "_" + type);
       }
     }
     ArrayList<String> words = new ArrayList<String>(text.length());
-    for(ArrayList<String> fs : map) {
+    for (ArrayList<String> fs : map) {
       if (fs.size() < 1)
         continue;
       String word = fs.get(0);
-      for(int i=1; i<fs.size(); ++i) {
+      for (int i = 1; i < fs.size(); ++i) {
         word = word + ":::" + fs.get(i);
       }
       words.add(word);
     }
     return words;
   }
-  
+
   /**
    * Gather data for output
    * 
@@ -136,54 +136,56 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     } catch (CASException e) {
       throw new ResourceProcessException(e);
     }
-    
+
     String sentId = ((Sentence) jcas.getAnnotationIndex(Sentence.type).iterator().next()).getId();
-    
+
     try {
       @SuppressWarnings("unchecked")
-      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/version3.1000.ChainCrf");
-      
-      ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText());
+      ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable
+              .readResourceObject("/version3.1000.ChainCrf");
+
+      ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(),
+              jcas.getDocumentText());
       String _words = words.get(0);
       if (words.size() > 1) {
-        for(int i=1; i<words.size(); ++i) {
-          _words = _words + "\t" + words.get(i); 
+        for (int i = 1; i < words.size(); ++i) {
+          _words = _words + "\t" + words.get(i);
         }
       }
-      
+
       if (writeFeaturesToFileForTraining) {
         PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
         out.println(sentId + ":::" + _words);
         out.close();
       }
-      
+
       Tagging<String> tagging = crf.tag(words);
       String pattern = "";
-      for(String tag : tagging.tags()) {
+      for (String tag : tagging.tags()) {
         pattern = pattern + tag;
       }
 
-//      System.out.println(pattern);
-      
+      // System.out.println(pattern);
+
       Pattern bi = Pattern.compile("BI*");
       Matcher matcher = bi.matcher(pattern);
-      
-      while(matcher.find()) {
+
+      while (matcher.find()) {
         int begin = matcher.start();
         int end = matcher.end();
         String name = jcas.getDocumentText().substring(begin, end);
         String preText = jcas.getDocumentText().substring(0, begin);
         int preSpace = preText.length() - preText.replaceAll(" ", "").length();
         int inSpace = name.length() - name.replaceAll(" ", "").length();
-        String format = sentId + "|" + (begin - preSpace) + " "
-                + (end - preSpace - inSpace - 1) + "|" + name;
+        String format = sentId + "|" + (begin - preSpace) + " " + (end - preSpace - inSpace - 1)
+                + "|" + name;
 
         outFile.println(format);
-//        System.out.println(format);
+        // System.out.println(format);
       }
-      
-//      System.out.println("\n");
-      
+
+      // System.out.println("\n");
+
     } catch (IOException e1) {
       // TODO Auto-generated catch block
       e1.printStackTrace();
@@ -191,7 +193,6 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       // TODO Auto-generated catch block
       e1.printStackTrace();
     }
-    
-   
+
   }
 }

@@ -29,7 +29,6 @@ public class GeneRangeExtractor implements RangeExtractor {
    * Chunker for GENETAG NER tagger
    */
   private Chunker chunker;
-  
 
   // Static member holds only one instance of the
   // SingletonExample class
@@ -58,13 +57,11 @@ public class GeneRangeExtractor implements RangeExtractor {
     if (null == singletonInstances) {
       singletonInstances = new HashMap<String, GeneRangeExtractor>();
     }
-    if (! singletonInstances.containsKey(resourceName)) {
+    if (!singletonInstances.containsKey(resourceName)) {
       singletonInstances.put(resourceName, new GeneRangeExtractor("/" + resourceName));
     }
     return singletonInstances.get(resourceName);
   }
-
-
 
   /**
    * Extract gene sequence from text
@@ -73,23 +70,24 @@ public class GeneRangeExtractor implements RangeExtractor {
    * 
    * @param text
    *          A English sentence that may or may not contains some gene sequence
-   * @return A Map that map begin indexes to end indexes of where gene sequence appear in the input text
+   * @return A Map that map begin indexes to end indexes of where gene sequence appear in the input
+   *         text
    */
   public List<Map<String, Object>> getSpans(String text) {
-	  ArrayList<Map<String, Object>> out = new ArrayList<Map<String, Object>>();
+    ArrayList<Map<String, Object>> out = new ArrayList<Map<String, Object>>();
 
     Chunking chunking = chunker.chunk(text);
     Set<Chunk> chunkSet = chunking.chunkSet();
     Iterator<Chunk> it = chunkSet.iterator();
     while (it.hasNext()) {
-      Map<String,Object> gene = new HashMap<String, Object>();
+      Map<String, Object> gene = new HashMap<String, Object>();
       Chunk chunk = it.next();
-	    gene.put("begin", chunk.start());
-	    gene.put("end", chunk.end());
-	    gene.put("score", chunk.score());
-	    gene.put("type", chunk.type());
+      gene.put("begin", chunk.start());
+      gene.put("end", chunk.end());
+      gene.put("score", chunk.score());
+      gene.put("type", chunk.type());
 
-	    out.add(gene);
+      out.add(gene);
     }
     return out;
   }
