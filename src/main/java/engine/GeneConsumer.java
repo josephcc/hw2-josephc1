@@ -49,7 +49,7 @@ public class GeneConsumer extends CasConsumer_ImplBase {
   /**
    * Path to the final output file
    */
-  private final String filename = "hw2-joseph1.out";
+  private final String filename = "hw2-josephc1.out";
 
   /**
    * Initializer

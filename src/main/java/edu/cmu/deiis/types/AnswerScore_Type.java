@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Thu Oct 09 19:52:25 EDT 2014 */
+/* First created by JCasGen Thu Oct 09 22:33:21 EDT 2014 */
 package edu.cmu.deiis.types;
 
 import org.apache.uima.jcas.JCas;
@@ -13,7 +13,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** 
- * Updated by JCasGen Thu Oct 09 19:52:25 EDT 2014
+ * Updated by JCasGen Thu Oct 09 22:33:21 EDT 2014
  * @generated */
 public class AnswerScore_Type extends Annotation_Type {
   /** @generated 
