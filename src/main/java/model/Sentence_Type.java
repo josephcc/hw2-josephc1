@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Sep 24 01:02:43 EDT 2014 */
+/* First created by JCasGen Thu Oct 09 19:52:25 EDT 2014 */
 package model;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** 
- * Updated by JCasGen Mon Oct 06 10:40:56 EDT 2014
+ * Updated by JCasGen Thu Oct 09 19:52:25 EDT 2014
  * @generated */
 public class Sentence_Type extends Annotation_Type {
   /** @generated 

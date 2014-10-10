@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Tue Sep 23 17:53:20 EDT 2014 */
+/* First created by JCasGen Thu Oct 09 19:52:25 EDT 2014 */
 package model;
 
 import org.apache.uima.jcas.JCas;
@@ -11,12 +11,12 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
-import org.apache.uima.jcas.tcas.Annotation_Type;
+import edu.cmu.deiis.types.Answer_Type;
 
 /** 
- * Updated by JCasGen Mon Oct 06 10:40:56 EDT 2014
+ * Updated by JCasGen Thu Oct 09 19:52:25 EDT 2014
  * @generated */
-public class Gene_Type extends Annotation_Type {
+public class Gene_Type extends Answer_Type {
   /** @generated 
    * @return the generator for this type
    */
@@ -71,54 +71,6 @@ public class Gene_Type extends Annotation_Type {
   
  
   /** @generated */
-  final Feature casFeat_processor;
-  /** @generated */
-  final int     casFeatCode_processor;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public String getProcessor(int addr) {
-        if (featOkTst && casFeat_processor == null)
-      jcas.throwFeatMissing("processor", "model.Gene");
-    return ll_cas.ll_getStringValue(addr, casFeatCode_processor);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setProcessor(int addr, String v) {
-        if (featOkTst && casFeat_processor == null)
-      jcas.throwFeatMissing("processor", "model.Gene");
-    ll_cas.ll_setStringValue(addr, casFeatCode_processor, v);}
-    
-  
- 
-  /** @generated */
-  final Feature casFeat_score;
-  /** @generated */
-  final int     casFeatCode_score;
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @return the feature value 
-   */ 
-  public double getScore(int addr) {
-        if (featOkTst && casFeat_score == null)
-      jcas.throwFeatMissing("score", "model.Gene");
-    return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
-  }
-  /** @generated
-   * @param addr low level Feature Structure reference
-   * @param v value to set 
-   */    
-  public void setScore(int addr, double v) {
-        if (featOkTst && casFeat_score == null)
-      jcas.throwFeatMissing("score", "model.Gene");
-    ll_cas.ll_setDoubleValue(addr, casFeatCode_score, v);}
-    
-  
- 
-  /** @generated */
   final Feature casFeat_category;
   /** @generated */
   final int     casFeatCode_category;
@@ -156,14 +108,6 @@ public class Gene_Type extends Annotation_Type {
  
     casFeat_gene = jcas.getRequiredFeatureDE(casType, "gene", "uima.cas.String", featOkTst);
     casFeatCode_gene  = (null == casFeat_gene) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_gene).getCode();
-
- 
-    casFeat_processor = jcas.getRequiredFeatureDE(casType, "processor", "uima.cas.String", featOkTst);
-    casFeatCode_processor  = (null == casFeat_processor) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_processor).getCode();
-
- 
-    casFeat_score = jcas.getRequiredFeatureDE(casType, "score", "uima.cas.Double", featOkTst);
-    casFeatCode_score  = (null == casFeat_score) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_score).getCode();
 
  
     casFeat_category = jcas.getRequiredFeatureDE(casType, "category", "uima.cas.String", featOkTst);

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Wed Sep 11 13:44:28 EDT 2013 */
+/* First created by JCasGen Thu Oct 09 19:52:25 EDT 2014 */
 package edu.cmu.deiis.types;
 
 import org.apache.uima.jcas.JCas;
@@ -13,10 +13,12 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** 
- * Updated by JCasGen Sun Oct 05 03:12:36 EDT 2014
+ * Updated by JCasGen Thu Oct 09 19:52:25 EDT 2014
  * @generated */
 public class AnswerScore_Type extends Annotation_Type {
-  /** @generated */
+  /** @generated 
+   * @return the generator for this type
+   */
   @Override
   protected FSGenerator getFSGenerator() {return fsGenerator;}
   /** @generated */
@@ -47,13 +49,19 @@ public class AnswerScore_Type extends Annotation_Type {
   final Feature casFeat_score;
   /** @generated */
   final int     casFeatCode_score;
-  /** @generated */ 
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
   public double getScore(int addr) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "edu.cmu.deiis.types.AnswerScore");
     return ll_cas.ll_getDoubleValue(addr, casFeatCode_score);
   }
-  /** @generated */    
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
   public void setScore(int addr, double v) {
         if (featOkTst && casFeat_score == null)
       jcas.throwFeatMissing("score", "edu.cmu.deiis.types.AnswerScore");
@@ -65,13 +73,19 @@ public class AnswerScore_Type extends Annotation_Type {
   final Feature casFeat_answer;
   /** @generated */
   final int     casFeatCode_answer;
-  /** @generated */ 
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
   public int getAnswer(int addr) {
         if (featOkTst && casFeat_answer == null)
       jcas.throwFeatMissing("answer", "edu.cmu.deiis.types.AnswerScore");
     return ll_cas.ll_getRefValue(addr, casFeatCode_answer);
   }
-  /** @generated */    
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
   public void setAnswer(int addr, int v) {
         if (featOkTst && casFeat_answer == null)
       jcas.throwFeatMissing("answer", "edu.cmu.deiis.types.AnswerScore");
@@ -82,7 +96,10 @@ public class AnswerScore_Type extends Annotation_Type {
 
 
   /** initialize variables to correspond with Cas Type and Features
-	* @generated */
+	 * @generated
+	 * @param jcas JCas
+	 * @param casType Type 
+	 */
   public AnswerScore_Type(JCas jcas, Type casType) {
     super(jcas, casType);
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());

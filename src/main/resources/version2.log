@@ -1,0 +1,12 @@
+     [java]      1:37 epoch=    7 lr=0.048276032 ll=-660107.4881 lp= -2241.7664 llp=-662349.2544 llp*=-408086.2641
+     [java]      1:48 epoch=    8 lr=0.048034652 ll=-504985.5836 lp= -2261.8295 llp=-507247.4131 llp*=-408086.2641
+     [java]      1:58 epoch=    9 lr=0.047794479 ll=-595791.0012 lp= -2327.2642 llp=-598118.2654 llp*=-408086.2641
+     [java]      1:58 Feat Extraction Time=:25
+     [java]      1:58 Forward Backward Time=:22
+     [java]      1:58 Update Time=:10
+     [java]      1:58 Prior Update Time=:00
+     [java]      1:58 Loss Time=:47
+     [java]
+     [java] Compiling to file=simplePos.ChainCrf
+     [java]
+     [java] Compiling to file=GeneBOITagger.model

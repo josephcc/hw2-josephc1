@@ -38,6 +38,8 @@ import com.aliasi.util.AbstractExternalizable;
  * 
  */
 public class GeneConsumer extends CasConsumer_ImplBase {
+  
+  private boolean writeFeaturesToFileForTraining = false;
 
   /**
    * Handle to the final output file
@@ -47,7 +49,7 @@ public class GeneConsumer extends CasConsumer_ImplBase {
   /**
    * Path to the final output file
    */
-  private final String filename = "hw1-joseph1.out";
+  private final String filename = "hw2-joseph1.out";
 
   /**
    * Initializer
@@ -91,24 +93,14 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     for (int i=0; i<text.length(); i++) {
       ArrayList<String> features = new ArrayList<String>();
       char c = text.charAt(i);
-//      String type = "others";
-//      if (c >= 'A' && c <= 'Z') {
-//        type = "upper";
-//      } else if (c >= 'a' && c <= 'z') {
-//        type = "lower";
-//      } else if (c >= '0' && c <= '9') {
-//        type = "number";
-//      } else if (c == ' ') {
-//        type = "space";
-//      }
-//      features.add("CHAR_" + type);
+
       features.add("CHAR_IS_" + c);
       map.add(features);
     }
     while (it.hasNext()) {
       Gene gene = (Gene) it.next();
       String type = gene.getCategory();
-      String processor = gene.getProcessor();
+      String processor = gene.getCasProcessorId();
       int begin = gene.getBegin();
       int end = gene.getEnd();
       for(int i=begin; i<end; i++) {
@@ -151,7 +143,6 @@ public class GeneConsumer extends CasConsumer_ImplBase {
       @SuppressWarnings("unchecked")
       ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable.readResourceObject("/version3.1000.ChainCrf");
       
-      PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
       ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(), jcas.getDocumentText());
       String _words = words.get(0);
       if (words.size() > 1) {
@@ -159,8 +150,12 @@ public class GeneConsumer extends CasConsumer_ImplBase {
           _words = _words + "\t" + words.get(i); 
         }
       }
-      out.println(sentId + ":::" + _words);
-      out.close();
+      
+      if (writeFeaturesToFileForTraining) {
+        PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("features.txt", true)));
+        out.println(sentId + ":::" + _words);
+        out.close();
+      }
       
       Tagging<String> tagging = crf.tag(words);
       String pattern = "";

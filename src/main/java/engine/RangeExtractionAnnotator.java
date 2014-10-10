@@ -46,8 +46,8 @@ abstract public class RangeExtractionAnnotator extends JCasAnnotator_ImplBase {
     	gene.setBegin(begin);
     	gene.setEnd(end);
     	gene.setGene(name);
-		  gene.setScore(score);
-    	gene.setProcessor(getName());
+		  gene.setConfidence(score);
+    	gene.setCasProcessorId(getName());
     	gene.setCategory(category);
     	gene.addToIndexes();
     }

@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Wed Sep 24 01:02:43 EDT 2014 */
+/* First created by JCasGen Thu Oct 09 19:52:25 EDT 2014 */
 package model;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,8 +11,8 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon Oct 06 10:40:56 EDT 2014
- * XML source: /Users/josephcc/git/courses/software_engineering/hw2-josephc1/src/main/resources/descriptors/typeSystemDescriptor.xml
+ * Updated by JCasGen Thu Oct 09 19:52:25 EDT 2014
+ * XML source: /Users/josephcc/git/courses/software_engineering/hw2-josephc1/src/main/resources/descriptors/deiis_types.xml
  * @generated */
 public class Sentence extends Annotation {
   /** @generated

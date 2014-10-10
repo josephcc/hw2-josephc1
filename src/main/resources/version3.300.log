@@ -1,0 +1,19 @@
+     [java]   5:50:56 epoch=  294 lr=0.013744755 ll=-285047.3460 lp=-2198812.1172 llp=-2483859.4632 llp*=-2334651.7213
+     [java]   5:52:08 epoch=  295 lr=0.013676031 ll=-176673.1395 lp=-2198389.1414 llp=-2375062.2809 llp*=-2334651.7213
+     [java]   5:53:20 epoch=  296 lr=0.013607651 ll=-491365.8598 lp=-2197980.1813 llp=-2689346.0411 llp*=-2334651.7213
+     [java]   5:54:32 epoch=  297 lr=0.013539612 ll=-197327.0970 lp=-2197588.1783 llp=-2394915.2753 llp*=-2334651.7213
+     [java]   5:55:44 epoch=  298 lr=0.013471914 ll=-292919.4114 lp=-2197205.0126 llp=-2490124.4240 llp*=-2334651.7213
+     [java]   5:56:56 epoch=  299 lr=0.013404555 ll=-292982.1086 lp=-2196797.0683 llp=-2489779.1769 llp*=-2334651.7213
+     [java]   5:56:56 Feat Extraction Time=2:13:21
+     [java]   5:56:56 Forward Backward Time=14:01
+     [java]   5:56:56 Update Time=7:36
+     [java]   5:56:56 Prior Update Time=53:50
+     [java]   5:56:56 Loss Time=2:27:36
+     [java]
+     [java] Compiling to file=simplePos.ChainCrf
+     [java]
+     [java] Compiling to file=GeneBOITagger.model
+
+BUILD SUCCESSFUL
+Total time: 356 minutes 57 seconds
+    21417.43 real     21852.00 user        53.64 sys
