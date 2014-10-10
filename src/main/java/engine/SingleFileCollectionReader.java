@@ -43,9 +43,9 @@ public class SingleFileCollectionReader extends CollectionReader_ImplBase {
   /**
    * Path to the only input file
    */
-  private final String filename = "hw2.in";
+//  private final String filename = "hw2.in";
 
-  // private final String filename = "src/main/resources/data/sample.in";
+   private final String filename = "src/main/resources/data/sample.in";
 
   /**
    * Total number of lines in the input file, to provide progress.

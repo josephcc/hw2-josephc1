@@ -142,7 +142,7 @@ public class GeneConsumer extends CasConsumer_ImplBase {
     try {
       @SuppressWarnings("unchecked")
       ChainCrf<String> crf = (ChainCrf<String>) AbstractExternalizable
-              .readResourceObject("/version3.1000.ChainCrf");
+              .readResourceObject("/version4.1000.ChainCrf");
 
       ArrayList<String> words = extractFeatureMap(jcas.getAnnotationIndex(Gene.type).iterator(),
               jcas.getDocumentText());

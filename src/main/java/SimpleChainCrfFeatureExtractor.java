@@ -66,6 +66,7 @@ public class SimpleChainCrfFeatureExtractor
 			Arrays.sort(_features2);
 			Arrays.sort(_features3);
 			HashMap<String, Integer> map = new HashMap<String, Integer>();
+			// unigrams
 			for(String _feature : _features) {
 				map.put(_feature, Integer.valueOf(1));
 			}
@@ -76,6 +77,16 @@ public class SimpleChainCrfFeatureExtractor
 					for(int k=j+1; k<_features.length; ++k) {
 						map.put(_features[i] + ":" + _features[j] + ":" + _features[k],  Integer.valueOf(1));
 					}
+				}
+			}
+
+			// unigrams
+			for(String curr : _features) {
+				for(String prev : _features2) {
+					map.put("Unigram_prev_" + prev, Integer.valueOf(1));
+				}
+				for(String next : _features3) {
+					map.put("Unigram_next_" + next, Integer.valueOf(1));
 				}
 			}
 
